@@ -20,4 +20,4 @@ Route::get('/', function () {
 });
 
 Route::resource('dashboard/post', PostsController::class);
-Route::resource('dashboard/catergory', CategoriesController::class);
+Route::resource('dashboard/category', CategoriesController::class);

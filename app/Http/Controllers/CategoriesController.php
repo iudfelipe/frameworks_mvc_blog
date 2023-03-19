@@ -12,7 +12,8 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view('dashboard.category.index', ['categories' => $categories]);
     }
 
     /**
@@ -20,7 +21,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.category.create');
     }
 
     /**
@@ -28,7 +29,17 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required|min:3|max:120',
+            'description'=>'required|min:3|max:250',
+        ]);
+
+        $category = new Category();
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->save();
+
+        return view('dashboard.category.message', ['msg' => 'Categoría creada con exito']);
     }
 
     /**
@@ -42,24 +53,37 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('dashboard.category.edit', ['category' => $category]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required|min:3|max:120',
+            'description'=>'required|min:3|max:250',
+        ]);
+
+        $category = Category::find($id);
+        $category->name = $request->input('name');
+        $category->description = $request->input('description');
+        $category->save();
+
+        return view('dashboard.category.message', ['msg' => 'Categoría modificada con exito']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $post = Category::find($id);
+        $post->delete();
+        return redirect('dashboard/category');
     }
 }
