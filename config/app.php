@@ -194,7 +194,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        /*
+         * Spatie (Roles y permisos)
+         */
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*
