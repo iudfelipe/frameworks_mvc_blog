@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100)->nullable()->default();
-            $table->biginteger('category_id')->unsigned()->default();
+            $table->string('name', 100)->nullable()->default('Text');
+            $table->biginteger('category_id')->unsigned()->nullable();
             $table->text('description')->nullable();
-            $table->enum('state', ['post', 'no post'])->default('post');
+            $table->enum('state', ['post', 'no post'])->default('no post');
             $table->timestamps();
+
+            // Agregando clave foranea:
+                $table->foreign('category_id')->references('id')->on('categories');
         });
     }
 

@@ -24,7 +24,7 @@
             <tr>
               <td>{{ $post->id }}</td>
               <td>{{ $post->name }}</td>
-              <td>{{ $post->category_id }}</td>
+              <td>{{ $post->category->name }}</td>
               <td>{{ $post->description }}</td>
               <td>{{ $post->state }}</td>
               <td>{{ $post->created_at }}</td>

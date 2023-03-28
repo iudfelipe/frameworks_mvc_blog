@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -13,7 +14,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('dashboard.post.index', ['post' => $posts]);
+        return view('dashboard.post.index', ['post' => $posts, 'category' => Category::all()]);
     }
 
     /**
@@ -21,7 +22,8 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('dashboard.post.create');
+        $category = Category::all();
+        return view('dashboard.post.create', ['category' => $category]);
     }
 
     /**
@@ -37,6 +39,7 @@ class PostsController extends Controller
         $post = new Post();
         $post->name = $request->input('name');
         $post->description = $request->input('description');
+        $post->category_id = $request->input('category');
         $post->save();
 
         return view('dashboard.post.message', ['msg' => 'Publicación creada con exito']);
@@ -56,7 +59,7 @@ class PostsController extends Controller
     public function edit($id)
     {
         $post = Post::find($id);
-        return view('dashboard.post.edit', ['post' => $post]);
+        return view('dashboard.post.edit', ['post' => $post, 'category' => Category::all()]);
     }
 
     /**
@@ -72,6 +75,7 @@ class PostsController extends Controller
         $post = Post::find($id);
         $post->name = $request->input('name');
         $post->description = $request->input('description');
+        $post->category_id = $request->input('category');
         $post->save();
 
         return view('dashboard.post.message', ['msg' => 'Publicación modificada con exito']);
