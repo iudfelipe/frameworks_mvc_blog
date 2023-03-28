@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\BD;
 
 class RolController extends Controller
 {
-    function __Constructor()
+    function __Construct()
     {
         $this->middleware('permission:ver-rol | crear-rol | editar-rol | borrar-rol', ['only' => ['index']]);
         $this->middleware('permission:crear-rol', ['only' => ['create', 'store']]);

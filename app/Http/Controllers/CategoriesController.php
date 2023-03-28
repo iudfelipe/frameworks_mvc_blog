@@ -82,8 +82,8 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        $post = Category::find($id);
-        $post->delete();
+        $category = Category::find($id);
+        $category->delete();
         return redirect('dashboard/category');
     }
 }
