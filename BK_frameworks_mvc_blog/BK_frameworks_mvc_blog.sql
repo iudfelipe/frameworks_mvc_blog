@@ -27,13 +27,11 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.categories: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.categories: ~0 rows (aproximadamente)
 INSERT INTO `categories` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
-	(1, 'Viajes', 'posts de viajes', '2023-03-29 02:31:26', '2023-03-29 02:31:26'),
-	(2, 'Cocina', 'posts relacionados con la cocina', '2023-03-29 02:31:45', '2023-03-29 02:31:45'),
-	(3, 'Mascotas', 'posts relacionados con mascotas', '2023-03-29 02:31:59', '2023-03-29 02:40:23');
+	(1, 'Prueba', 'Categoria de prueba', '2023-04-17 09:22:52', '2023-04-17 09:22:52');
 
 -- Volcando estructura para tabla frameworks_mvc_blog.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
@@ -53,31 +51,28 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 -- Volcando estructura para tabla frameworks_mvc_blog.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Volcando datos para la tabla frameworks_mvc_blog.migrations: ~7 rows (aproximadamente)
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-	(36, '2014_10_12_000000_create_users_table', 1),
-	(37, '2014_10_12_100000_create_password_reset_tokens_table', 1),
-	(38, '2019_08_19_000000_create_failed_jobs_table', 1),
-	(39, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-	(40, '2023_03_18_191846_create_categories_table', 1),
-	(41, '2023_03_19_170145_create_permission_tables', 1),
-	(42, '2023_03_28_140220_create_posts_table', 1);
+	(50, '2014_10_12_000000_create_users_table', 1),
+	(51, '2014_10_12_100000_create_password_reset_tokens_table', 1),
+	(52, '2019_08_19_000000_create_failed_jobs_table', 1),
+	(53, '2019_12_14_000001_create_personal_access_tokens_table', 1),
+	(54, '2023_03_18_191846_create_categories_table', 1),
+	(55, '2023_03_19_170145_create_permission_tables', 1),
+	(56, '2023_03_28_140220_create_posts_table', 1);
 
 -- Volcando estructura para tabla frameworks_mvc_blog.model_has_permissions
 CREATE TABLE IF NOT EXISTS `model_has_permissions` (
   `permission_id` bigint unsigned NOT NULL,
   `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint unsigned NOT NULL,
-  `team_id` bigint unsigned NOT NULL,
-  PRIMARY KEY (`team_id`,`permission_id`,`model_id`,`model_type`),
+  PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
   KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`),
-  KEY `model_has_permissions_permission_id_foreign` (`permission_id`),
-  KEY `model_has_permissions_team_foreign_key_index` (`team_id`),
   CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -88,15 +83,15 @@ CREATE TABLE IF NOT EXISTS `model_has_roles` (
   `role_id` bigint unsigned NOT NULL,
   `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `model_id` bigint unsigned NOT NULL,
-  `team_id` bigint unsigned NOT NULL,
-  PRIMARY KEY (`team_id`,`role_id`,`model_id`,`model_type`),
+  PRIMARY KEY (`role_id`,`model_id`,`model_type`),
   KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`),
-  KEY `model_has_roles_role_id_foreign` (`role_id`),
-  KEY `model_has_roles_team_foreign_key_index` (`team_id`),
   CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.model_has_roles: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.model_has_roles: ~2 rows (aproximadamente)
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+	(1, 'App\\Models\\User', 1),
+	(2, 'App\\Models\\User', 2);
 
 -- Volcando estructura para tabla frameworks_mvc_blog.password_reset_tokens
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
@@ -117,9 +112,26 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.permissions: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.permissions: ~16 rows (aproximadamente)
+INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+	(1, 'ver-rol', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(2, 'crear-rol', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(3, 'editar-rol', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(4, 'borrar-rol', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(5, 'ver-post', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(6, 'crear-post', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(7, 'editar-post', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(8, 'borrar-post', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(9, 'ver-category', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(10, 'crear-category', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(11, 'editar-category', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(12, 'borrar-category', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(13, 'ver-usuarios', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(14, 'crear-usuarios', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(15, 'editar-usuarios', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50'),
+	(16, 'borrar-usuarios', 'web', '2023-04-17 09:21:50', '2023-04-17 09:21:50');
 
 -- Volcando estructura para tabla frameworks_mvc_blog.personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
@@ -152,28 +164,27 @@ CREATE TABLE IF NOT EXISTS `posts` (
   PRIMARY KEY (`id`),
   KEY `posts_category_id_foreign` (`category_id`),
   CONSTRAINT `posts_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.posts: ~3 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.posts: ~1 rows (aproximadamente)
 INSERT INTO `posts` (`id`, `name`, `category_id`, `description`, `state`, `created_at`, `updated_at`) VALUES
-	(1, 'Post1', 1, 'Post de prueba para mostrar el funcionamiento del CRUD', 'no post', '2023-03-29 02:32:34', '2023-03-29 02:32:34'),
-	(3, 'El perro paco', 3, 'Este es un post acerca de mi mascota el perro paco', 'no post', '2023-03-29 02:40:04', '2023-03-29 02:40:04'),
-	(4, 'Snack rapido', 2, 'Receta de snack rapido para disfrutar cuando tenemos hambre', 'no post', '2023-03-29 02:41:58', '2023-03-29 02:41:58');
+	(1, 'Post de prueba', 1, 'Texto del post', 'no post', '2023-04-17 09:23:11', '2023-04-17 09:23:11');
 
 -- Volcando estructura para tabla frameworks_mvc_blog.roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `team_id` bigint unsigned DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `roles_team_id_name_guard_name_unique` (`team_id`,`name`,`guard_name`),
-  KEY `roles_team_foreign_key_index` (`team_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.roles: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.roles: ~2 rows (aproximadamente)
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+	(1, 'Administrador', 'web', '2023-04-17 09:23:40', '2023-04-17 09:23:40'),
+	(2, 'Invitado', 'web', '2023-04-17 09:23:57', '2023-04-17 09:23:57');
 
 -- Volcando estructura para tabla frameworks_mvc_blog.role_has_permissions
 CREATE TABLE IF NOT EXISTS `role_has_permissions` (
@@ -185,7 +196,25 @@ CREATE TABLE IF NOT EXISTS `role_has_permissions` (
   CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.role_has_permissions: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.role_has_permissions: ~17 rows (aproximadamente)
+INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
+	(1, 1),
+	(2, 1),
+	(3, 1),
+	(4, 1),
+	(5, 1),
+	(6, 1),
+	(7, 1),
+	(8, 1),
+	(9, 1),
+	(10, 1),
+	(11, 1),
+	(12, 1),
+	(13, 1),
+	(14, 1),
+	(15, 1),
+	(16, 1),
+	(5, 2);
 
 -- Volcando estructura para tabla frameworks_mvc_blog.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -199,11 +228,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla frameworks_mvc_blog.users: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla frameworks_mvc_blog.users: ~2 rows (aproximadamente)
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-	(1, 'Andres Acevedo', 'andres.acevedo@est.iudigital.edu.co', NULL, '$2y$10$OLb4L.izQi1/7yrJV.YjWODAYiaSOktfBjnYlq220aaPz1rmtT2dC', NULL, '2023-03-29 02:42:49', '2023-03-29 02:42:49');
+	(1, 'Super Admin', 'admin@gmail.com', NULL, '$2y$10$CAeijdQMw.6xrorTJoWQ..5ZYXNwR/g0SmwmAm65BAbo5/Hk8VTDi', NULL, '2023-04-17 09:22:12', '2023-04-17 09:22:12'),
+	(2, 'Invitado', 'invitado@gmail.com', NULL, '$2y$10$353EAdfcPgUYumxocRDMPO3LI88ONASFqNe8xhUWbCm5UkX3viUlS', NULL, '2023-04-17 09:24:22', '2023-04-17 09:24:22');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
