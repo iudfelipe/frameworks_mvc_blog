@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\RolController;
+use App\Http\Controllers\UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +36,5 @@ require __DIR__.'/auth.php';
 
 Route::resource('dashboard/post', PostsController::class);
 Route::resource('dashboard/category', CategoriesController::class);
+Route::resource('roles', RolController::class);
+Route::resource('usuarios', UsuarioController::class);

@@ -1,10 +1,20 @@
-@extends('dashboard.master')
-@section('titulo', 'Posts')
-@section('contenido')
-  <main>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Categorias publicadas') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                <main>
     <div class="container py-4">
-      <h2>Categorías publicadas</h2>
-      <a href="{{ url('dashboard/category/create') }}" class="btn btn-primary btn-sm">Nueva Categoría</a>
+    @can('crear-category')
+    <a href="{{ url('dashboard/category/create') }}" class="btn btn-primary btn-sm">Nueva Categoría</a>
+    @endcan
+      
       <table class="table table-dark table-striped">
         <thead>
           <tr>
@@ -25,13 +35,19 @@
               <td>{{ $category->description }}</td>
               <td>{{ $category->created_at }}</td>
               <td>{{ $category->updated_at }}</td>
-              <td><a href="{{ url('dashboard/category/'.$category->id.'/edit') }}" class="bi bi-pencil"></a></td>
               <td>
-                <form action="{{ url('dashboard/category/'.$category->id) }}" method="post">
-                  @method('DELETE')
-                  @csrf
-                  <button class="bi bi-eraser-fill" type="submit"></button>
-                </form>
+              @can('editar-category')
+              <a href="{{ url('dashboard/category/'.$category->id.'/edit') }}" class="bi bi-pencil"></a>
+              @endcan
+              </td>
+              <td>
+              @can('borrar-category')
+              <form action="{{ url('dashboard/category/'.$category->id) }}" method="post">
+                @method('DELETE')
+                @csrf
+                <button class="bi bi-eraser-fill" type="submit"></button>
+              </form>
+              @endcan
               </td>
             </tr>
           @endforeach
@@ -39,4 +55,8 @@
       </table>
     </div>
   </main>
-@endsection
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
